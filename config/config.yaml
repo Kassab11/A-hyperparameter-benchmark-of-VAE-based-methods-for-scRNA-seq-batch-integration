@@ -1,0 +1,101 @@
+# Default: six training jobs (three models, full genes and HVGs, one architecture).
+# Relative paths resolve from the directory where you invoke Snakemake.
+output_dir: results
+environment: environment.yml
+accelerator: cpu
+selected_datasets: [human_immune]
+models: [scvi, mrvi, ldvae]
+features: [full, hvg]
+seeds: [0]
+plots: [umap]  # [umap, tsne] for both, [] to skip plots
+
+grid:
+  n_hidden: [128]
+  n_latent: [30]
+  n_layers: [1]
+  n_latent_u: [20]  # MrVI only; never expands the scVI or LDVAE grid
+
+datasets:
+  human_immune:
+    path: data/immune_cell_hum.h5ad
+    counts_layer: counts  # A layer name, X, or raw (meaning .raw.X)
+    batch_key: batch
+    sample_key: sample_ID
+    label_key: cell_type
+    pseudotime_key: dpt_pseudotime
+    exclude_labels: []
+
+  capillary_blood:
+    path: data/imyoo_capillary_blood_samples_76535_pbmcs.h5ad
+    counts_layer: X
+    batch_key: run_lane_batch
+    sample_key: Participant IDs
+    label_key: cell_type_level_3
+    pseudotime_key: null
+    exclude_labels: [Mast Cells, asDC, cDC2, cDC3, pDC, tumorDC]
+    preprocessing:
+      min_cells_per_batch: 10
+
+  remission_biome:
+    path: data/imyoo_remission_biome_pilot_2024-05-01.h5ad
+    counts_layer: X
+    batch_key: library
+    sample_key: participant_id
+    label_key: cell_type
+    pseudotime_key: null
+    exclude_labels: [Unlabeled]
+
+  tabula_muris:
+    path: data/tabula-muris-senis-bbknn-processed-official-annotations.h5ad
+    counts_layer: raw
+    batch_key: batch
+    sample_key: benchmark_sample
+    sample_columns: [mouse.id, tissue]  # Derive a sample ID for each mouse/tissue pair
+    label_key: cell_ontology_class
+    pseudotime_key: null
+    exclude_labels: []
+    evaluation:
+      isolated_labels: "off"
+      trajectory: "off"
+
+preprocessing:
+  min_genes_quantile: 0.01
+  max_counts_quantile: 0.99
+  min_cells_per_gene: 3
+  min_cells_per_batch: 1
+  max_mito_pct: null  # Optional extra filter, e.g. 20; not applied by default
+  n_top_genes: 5000
+
+training:
+  max_epochs: 200
+  batch_size: 128
+  train_size: 0.9
+  early_stopping: false
+  mrvi_representation: u  # u: sample-independent; z: sample-dependent
+
+model_kwargs:
+  scvi:
+    gene_likelihood: zinb
+  mrvi: {}
+  ldvae:
+    gene_likelihood: nb
+
+evaluation:
+  n_neighbors: 15
+  n_pcs: 50
+  resolutions: [0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0]
+  lisi_k0: 90
+  lisi_subsample: null  # null = all cells; otherwise an integer percentage (1–100)
+  isolated_labels: auto
+  trajectory: auto  # Only when a varying reference pseudotime annotation is present
+  pcr_input: counts  # Matches the historical raw-count reference; or log_normalized
+  max_cells: null  # Optional seeded evaluation subset; null evaluates all cells
+  strict_metrics: true  # Unexpected metric errors fail the rule instead of inflating scores
+
+resources:
+  prepare_threads: 4
+  prepare_mem_mb: 32000
+  train_threads: 4
+  train_mem_mb: 16000
+  evaluate_threads: 4
+  evaluate_mem_mb: 32000

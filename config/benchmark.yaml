@@ -1,0 +1,13 @@
+# Overrides config/config.yaml. Full publication architecture grid:
+# (30 scVI + 60 MrVI + 30 LDVAE) x 2 feature sets x 4 datasets = 960 training jobs.
+# This is a portable refactor, not a claim of bitwise reproduction of published scores.
+output_dir: results/benchmark
+selected_datasets: [human_immune, capillary_blood, remission_biome, tabula_muris]
+models: [scvi, mrvi, ldvae]
+features: [full, hvg]
+seeds: [0]
+grid:
+  n_hidden: [128, 256]
+  n_latent: [10, 20, 30, 40, 50]
+  n_layers: [1, 2, 3]
+  n_latent_u: [10, 20]

@@ -1,0 +1,39 @@
+# A small end-to-end run for later validation on your execution machine.
+# First generate its input with scripts/make_test_data.py; no real data required.
+output_dir: results/smoke
+accelerator: cpu
+selected_datasets: [smoke]
+models: [scvi, mrvi, ldvae]
+features: [full, hvg]
+seeds: [0]
+plots: [umap]
+grid:
+  n_hidden: [32]
+  n_latent: [4]
+  n_layers: [1]
+  n_latent_u: [2]
+datasets:
+  smoke:
+    path: .test-data/smoke.h5ad
+    counts_layer: counts
+    batch_key: batch
+    sample_key: sample
+    label_key: cell_type
+    pseudotime_key: null
+    exclude_labels: []
+preprocessing:
+  min_genes_quantile: 0.0
+  max_counts_quantile: 1.0
+  n_top_genes: 256
+training:
+  max_epochs: 2
+  batch_size: 64
+evaluation:
+  n_neighbors: 10
+  n_pcs: 20
+  lisi_k0: 30
+  resolutions: [0.5, 1.0]
+resources:
+  prepare_threads: 2
+  train_threads: 2
+  evaluate_threads: 2

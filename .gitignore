@@ -1,0 +1,10 @@
+/.snakemake/
+/.test-data/
+/data/
+/results/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.h5ad
+*.loom
+*.zarr/

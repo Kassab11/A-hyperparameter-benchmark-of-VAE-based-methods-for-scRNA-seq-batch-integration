@@ -1,4 +1,6 @@
-name: scrna-benchmark
+# Linux x86_64 with an NVIDIA driver supporting CUDA 12.
+# The JAX CUDA extra is necessary for MrVI; CUDA PyTorch alone is insufficient.
+name: scrna-benchmark-gpu
 channels:
   - conda-forge
 dependencies:
@@ -18,8 +20,11 @@ dependencies:
       - torch==2.6.0
       - lightning==2.5.0.post0
       - torchmetrics==1.6.2
-      - jax==0.4.35
-      - jaxlib==0.4.35
+      - jax[cuda12]==0.4.35
+      # JAX 0.4.35's CUDA extra explicitly requires jaxlib 0.4.34.
+      - jaxlib==0.4.34
+      - jax-cuda12-plugin==0.4.35
+      - nvidia-cuda-nvcc-cu12==12.4.131
       - flax==0.10.2
       - optax==0.2.4
       - numpyro==0.16.1
