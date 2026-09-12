@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+message: "If you use this benchmark, please cite the paper in preferred-citation."
+type: software
+title: "A hyperparameter benchmark of VAE-based methods for scRNA-seq batch integration"
+repository-code: "https://github.com/Kassab11/A-hyperparameter-benchmark-of-VAE-based-methods-for-scRNA-seq-batch-integration"
+authors:
+  - family-names: Kassab
+    given-names: Mohamad
+    orcid: "https://orcid.org/0000-0002-2047-8592"
+  - family-names: Maniero
+    given-names: Luiz
+    orcid: "https://orcid.org/0000-0003-3448-4827"
+  - family-names: da Veiga Beltrame
+    given-names: Eduardo
+    orcid: "https://orcid.org/0000-0002-1529-9207"
+preferred-citation:
+  type: article
+  title: "A hyperparameter benchmark of VAE-based methods for scRNA-seq batch integration"
+  authors:
+    - family-names: Kassab
+      given-names: Mohamad
+      orcid: "https://orcid.org/0000-0002-2047-8592"
+    - family-names: Maniero
+      given-names: Luiz
+      orcid: "https://orcid.org/0000-0003-3448-4827"
+    - family-names: da Veiga Beltrame
+      given-names: Eduardo
+      orcid: "https://orcid.org/0000-0002-1529-9207"
+  journal: bioRxiv
+  year: 2026
+  month: 2
+  doi: "10.64898/2026.02.10.705093"
+  url: "https://www.biorxiv.org/content/10.64898/2026.02.10.705093v1.full"

@@ -173,10 +173,22 @@ The synthetic input has 360 cells, 512 genes, six samples, two batches, and thre
 
 The unit checks cover grid expansion, independent random seeds, missing MrVI sample settings, raw-count input handling, sample derivation, and composite-score error handling. They complement the end-to-end smoke run.
 
-## Historical code and published results
+## Citation
 
-This workflow refactors the archived analysis into explicit, configurable stages. It corrects model imports, full/HVG selection, sample/batch registration, and backend-specific instrumentation. These changes, input versions, and backend nondeterminism can change scores; matching the architecture grid does not establish exact reproduction of the published tables.
+If you use this benchmark, please cite the paper:
 
-The original [MrVI_snakemake](MrVI_snakemake/) scripts, [notebooks](notebooks/), and [Results](Results/) remain available. The previous root entry point is preserved in [legacy/pipeline.py](legacy/pipeline.py), and the original machine-specific Conda export is in [envs/publication-export.yml](envs/publication-export.yml). Use the root `Snakefile` and the portable environment recipes for new runs. The unified workflow generates model results; historical baseline comparisons remain in the published results workbook.
+Mohamad Kassab, Luiz Maniero, and Eduardo da Veiga Beltrame (2026). **A hyperparameter benchmark of VAE-based methods for scRNA-seq batch integration.** *bioRxiv* (preprint). [doi:10.64898/2026.02.10.705093](https://doi.org/10.64898/2026.02.10.705093).
 
-Please cite the [related publication](https://doi.org/10.64898/2026.02.10.705093) and the original methods and datasets when using this benchmark.
+```bibtex
+@article{kassab2026hyperparameter,
+  author  = {Kassab, Mohamad and Maniero, Luiz and da Veiga Beltrame, Eduardo},
+  title   = {A hyperparameter benchmark of {VAE}-based methods for {scRNA-seq} batch integration},
+  journal = {bioRxiv},
+  year    = {2026},
+  doi     = {10.64898/2026.02.10.705093},
+  url     = {https://www.biorxiv.org/content/10.64898/2026.02.10.705093v1.full},
+  note    = {Preprint}
+}
+```
+
+Citation metadata for GitHub is provided in [CITATION.cff](CITATION.cff). Please also cite the original methods and datasets used in your analysis.
